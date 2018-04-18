@@ -4,6 +4,7 @@ import { kebabCase } from 'lodash'
 import Helmet from 'react-helmet'
 import Link from 'gatsby-link'
 import Content, { HTMLContent } from '../components/Content'
+import { Container, Header, List } from 'semantic-ui-react';
 
 export const BlogPostTemplate = ({
   content,
@@ -18,29 +19,25 @@ export const BlogPostTemplate = ({
   return (
     <section className="section">
       {helmet || ''}
-      <div className="container content">
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
-              {title}
-            </h1>
+      <Container text>
+      
+            <Header as="h1">{title}</Header>
             <p>{description}</p>
             <PostContent content={content} />
             {tags && tags.length ? (
               <div style={{ marginTop: `4rem` }}>
                 <h4>Tags</h4>
-                <ul className="taglist">
+                <List horizontal link>
                   {tags.map(tag => (
-                    <li key={tag + `tag`}>
-                      <Link to={`/tags/${kebabCase(tag)}/`}>{tag}</Link>
-                    </li>
+                    <List.Item key={tag + `tag`} as={Link} to={`/tags/${kebabCase(tag)}/`}>
+                      {tag}
+                    </List.Item>
                   ))}
-                </ul>
+                </List>
               </div>
             ) : null}
-          </div>
-        </div>
-      </div>
+      
+      </Container>
     </section>
   )
 }
